@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap - EduPlatform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/assets/css/style.css">
+    <style>
+        .auth-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+        .auth-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .auth-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0293de;
+            margin-bottom: 20px;
+        }
+        .social-login .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .divider-text {
+            padding: 0 10px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar (index.html'deki ile aynı) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <!-- Navbar içeriği index.html'deki ile aynı olacak -->
+    </nav>
+
+    <!-- Giriş Formu -->
+    <section class="auth-section py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="auth-card card p-4 p-md-5">
+                        <div class="auth-header">
+                            <div class="auth-logo">EduPlatform</div>
+                            <h2>Hesabınıza Giriş Yapın</h2>
+                            <p class="text-muted">Eğitim yolculuğunuza devam etmek için giriş yapın</p>
+                        </div>
+                        
+                        <form id="loginForm">
+                            <div class="mb-3">
+                              <label for="loginEmail" class="form-label">E-posta Adresi</label>
+                              <input type="email" class="form-control" id="loginEmail" placeholder="ornek@email.com" required>
+                            </div>
+                            <div class="mb-3">
+                              <label for="loginPassword" class="form-label">Şifre</label>
+                              <input type="password" class="form-control" id="loginPassword" placeholder="Şifreniz" required>
+                              <div class="form-text text-end">
+                                <a href="#">Şifremi Unuttum?</a>
+                              </div>
+                            </div>
+                            <div id="loginError" class="alert alert-danger d-none"></div>
+                            <button type="submit" class="btn btn-primary w-100 py-2">Giriş Yap</button>
+                        </form>
+                          
+                        
+                        <div class="divider">
+                            <span class="divider-text">veya</span>
+                        </div>
+                        
+                        <div class="social-login">
+                            <button class="btn btn-outline-primary">
+                                <i class="fab fa-google me-2"></i> Google ile Giriş Yap
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="fab fa-facebook-f me-2"></i> Facebook ile Giriş Yap
+                            </button>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <p class="mb-0">Hesabınız yok mu? <a href="register.html">Kayıt Olun</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (index.html'deki ile aynı) -->
+    <footer class="bg-dark text-white py-5">
+        <!-- Footer içeriği index.html'deki ile aynı olacak -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/assets/js/script.js"></script>
+</body>
+</html>

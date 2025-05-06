@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurs Detay - EduPlatform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/assets/css/style.css">
+</head>
+<body>
+    <!-- Navbar (index.html'deki ile aynı) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <!-- Navbar içeriği index.html'deki ile aynı olacak -->
+    </nav>
+
+    <!-- Kurs Detay Üst Kısım -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Ana Sayfa</a></li>
+                            <li class="breadcrumb-item"><a href="courses.html">Kurslar</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Kurs Detay</li>
+                        </ol>
+                    </nav>
+                    
+                    <h1>Matematik 101: Temel Matematik Kursu</h1>
+                    <p class="lead">Matematiğin temel kavramlarını öğrenin ve güçlü bir temel oluşturun.</p>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="me-3">
+                            <span class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </span>
+                            <span class="ms-1">4.5 (120 değerlendirme)</span>
+                        </div>
+                        <div class="me-3">
+                            <i class="fas fa-user-graduate me-1"></i> 450 öğrenci
+                        </div>
+                        <div>
+                            <i class="fas fa-clock me-1"></i> 8 saat
+                        </div>
+                    </div>
+                    
+                    <div class="ratio ratio-16x9 mb-4">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" allowfullscreen></iframe>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center mb-4">
+                                <span class="display-4 fw-bold text-primary">₺199,99</span>
+                                <span class="text-decoration-line-through text-muted ms-2">₺299,99</span>
+                            </div>
+                            
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-video me-2 text-primary"></i> Dersler</span>
+                                    <span class="badge bg-primary rounded-pill">24</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-file-alt me-2 text-primary"></i> Materyaller</span>
+                                    <span class="badge bg-primary rounded-pill">15</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-certificate me-2 text-primary"></i> Sertifika</span>
+                                    <span class="badge bg-primary rounded-pill">Var</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-infinity me-2 text-primary"></i> Erişim</span>
+                                    <span class="badge bg-primary rounded-pill">Süresiz</span>
+                                </li>
+                            </ul>
+                            
+                            <button class="btn btn-primary btn-lg w-100 mb-3">Hemen Satın Al</button>
+                            <button class="btn btn-outline-primary btn-lg w-100">Sepete Ekle</button>
+                            
+                            <div class="text-center mt-3">
+                                <small class="text-muted">30 gün para iade garantisi</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kurs İçeriği -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-header bg-white">
+                            <h3 class="mb-0">Kurs İçeriği</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion" id="courseAccordion">
+                                <!-- Bölüm 1 -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                            Bölüm 1: Temel Kavramlar (4 ders)
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#courseAccordion">
+                                        <div class="accordion-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <span><i class="far fa-play-circle me-2 text-primary"></i> Giriş ve Kurs Tanıtımı</span>
+                                                    <span class="badge bg-light text-dark">15:32</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <span><i class="far fa-play-circle me-2 text-primary"></i> Matematik Nedir?</span>
+                                                    <span class="badge bg-light text-dark">22:45</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <span><i class="far fa-play-circle me-2 text-primary"></i> Sayılar ve İşlemler</span>
+                                                    <span class="badge bg-light text-dark">18:10</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <span><i class="fas fa-lock me-2 text-muted"></i> Bölüm Testi</span>
+                                                    <span class="badge bg-light text-dark">10 soru</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Diğer bölümler benzer şekilde eklenecek -->
+                                <!-- Bölüm 2 -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                            Bölüm 2: Denklemler (6 ders)
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#courseAccordion">
+                                        <div class="accordion-body">
+                                            <!-- Ders listesi -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Eğitmen Bilgisi -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-white">
+                            <h3 class="mb-0">Eğitmen</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <img src="https://via.placeholder.com/100" class="rounded-circle me-4" alt="Eğitmen">
+                                <div>
+                                    <h4>Ahmet Yılmaz</h4>
+                                    <p class="text-muted">Matematik Öğretmeni</p>
+                                    <p>15 yıllık deneyime sahip matematik öğretmeni. 1000'den fazla öğrenciye eğitim verdim. Öğrencilerimin sınav başarılarında %90'ın üzerinde artış sağladım.</p>
+                                    <div class="d-flex">
+                                        <a href="#" class="btn btn-outline-primary btn-sm me-2">
+                                            <i class="fas fa-envelope me-1"></i> Mesaj Gönder
+                                        </a>
+                                        <a href="#" class="btn btn-outline-secondary btn-sm">
+                                            <i class="fas fa-user me-1"></i> Profili Görüntüle
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Yorumlar -->
+                    <div class="card">
+                        <div class="card-header bg-white">
+                            <h3 class="mb-0">Öğrenci Yorumları</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Yorum 1 -->
+                            <div class="mb-4 pb-4 border-bottom">
+                                <div class="d-flex mb-3">
+                                    <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Öğrenci">
+                                    <div>
+                                        <h5 class="mb-1">Mehmet K.</h5>
+                                        <div class="text-warning mb-1">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <small class="text-muted">2 hafta önce</small>
+                                    </div>
+                                </div>
+                                <p>Harika bir kurs! Matematik temelimi çok güçlendirdim. Eğitmenin anlatımı çok akıcı ve anlaşılır. Kesinlikle tavsiye ederim.</p>
+                            </div>
+                            
+                            <!-- Yorum 2 -->
+                            <div class="mb-4 pb-4 border-bottom">
+                                <div class="d-flex mb-3">
+                                    <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Öğrenci">
+                                    <div>
+                                        <h5 class="mb-1">Ayşe T.</h5>
+                                        <div class="text-warning mb-1">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <small class="text-muted">1 ay önce</small>
+                                    </div>
+                                </div>
+                                <p>Genel olarak çok memnun kaldım. Sadece bazı konular biraz daha detaylı anlatılabilirdi. Yine de çok faydalı bir kurs oldu benim için.</p>
+                            </div>
+                            
+                            <!-- Yorum Formu -->
+                            <div class="mt-5">
+                                <h4 class="mb-4">Yorum Yap</h4>
+                                <form>
+                                    <div class="mb-3">
+                                        <label class="form-label">Puanınız</label>
+                                        <div class="rating">
+                                            <i class="far fa-star" data-rating="1"></i>
+                                            <i class="far fa-star" data-rating="2"></i>
+                                            <i class="far fa-star" data-rating="3"></i>
+                                            <i class="far fa-star" data-rating="4"></i>
+                                            <i class="far fa-star" data-rating="5"></i>
+                                            <input type="hidden" name="rating" id="rating-value" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="comment" class="form-label">Yorumunuz</label>
+                                        <textarea class="form-control" id="comment" rows="3"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Gönder</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (index.html'deki ile aynı) -->
+    <footer class="bg-dark text-white py-5">
+        <!-- Footer içeriği index.html'deki ile aynı olacak -->
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/assets/js/script.js"></script>
+    <script>
+        // Yıldız derecelendirme sistemi
+        document.querySelectorAll('.rating i').forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = this.getAttribute('data-rating');
+                document.getElementById('rating-value').value = rating;
+                
+                // Tüm yıldızları sıfırla
+                document.querySelectorAll('.rating i').forEach(s => {
+                    s.classList.remove('fas');
+                    s.classList.add('far');
+                });
+                
+                // Seçilen ve önceki yıldızları doldur
+                for (let i = 1; i <= rating; i++) {
+                    const starToFill = document.querySelector(`.rating i[data-rating="${i}"]`);
+                    starToFill.classList.remove('far');
+                    starToFill.classList.add('fas');
+                }
+            });
+            
+            star.addEventListener('mouseover', function() {
+                const rating = this.getAttribute('data-rating');
+                
+                // Tüm yıldızları sıfırla
+                document.querySelectorAll('.rating i').forEach(s => {
+                    s.classList.remove('fas');
+                    s.classList.add('far');
+                });
+                
+                // Üzerine gelinen ve önceki yıldızları doldur
+                for (let i = 1; i <= rating; i++) {
+                    const starToFill = document.querySelector(`.rating i[data-rating="${i}"]`);
+                    starToFill.classList.remove('far');
+                    starToFill.classList.add('fas');
+                }
+            });
+            
+            star.addEventListener('mouseout', function() {
+                const currentRating = document.getElementById('rating-value').value;
+                
+                // Tüm yıldızları sıfırla
+                document.querySelectorAll('.rating i').forEach(s => {
+                    s.classList.remove('fas');
+                    s.classList.add('far');
+                });
+                
+                // Kayıtlı derecelendirmeyi geri yükle
+                if (currentRating > 0) {
+                    for (let i = 1; i <= currentRating; i++) {
+                        const starToFill = document.querySelector(`.rating i[data-rating="${i}"]`);
+                        starToFill.classList.remove('far');
+                        starToFill.classList.add('fas');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

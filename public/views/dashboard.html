@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Paneli - EduPlatform</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="EduPlatform kullanıcı paneli - Kurslarınızı yönetin, ilerlemenizi takip edin">
+    <meta name="keywords" content="online eğitim, kullanıcı paneli, kurs takip, sertifikalar">
+    
+    <!-- CSS Links -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Dashboard Özel CSS -->
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --sidebar-bg: #f8f9fa;
+            --sidebar-active-bg: #e9ecef;
+            --sidebar-active-color: #0293de;
+            --top-navbar-height: 60px;
+        }
+        
+        /* Ana Layout */
+        .dashboard-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .dashboard-sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+            position: fixed;
+            height: 100vh;
+            z-index: 1000;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #dee2e6;
+            text-align: center;
+        }
+        
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .sidebar-menu {
+            padding: 1rem;
+        }
+        
+        .sidebar-menu .nav-link {
+            color: #495057;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            padding: 10px 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-menu .nav-link i {
+            width: 24px;
+            text-align: center;
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .sidebar-menu .nav-link:hover,
+        .sidebar-menu .nav-link.active {
+            background-color: var(--sidebar-active-bg);
+            color: var(--sidebar-active-color);
+        }
+        
+        .sidebar-menu .badge {
+            font-size: 0.7rem;
+            margin-left: auto;
+        }
+        
+        /* Main Content */
+        .dashboard-content {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+        
+        /* Top Navbar */
+        .top-navbar {
+            height: var(--top-navbar-height);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background-color: white;
+            z-index: 999;
+        }
+        
+        /* Kartlar */
+        .stats-card {
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .stats-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 1.5rem;
+        }
+        
+        /* Kurs Kartları */
+        .course-card {
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .progress-thin {
+            height: 8px;
+        }
+        
+        /* Etkinlik Listesi */
+        .activity-item {
+            padding: 1rem;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .activity-item:hover {
+            background-color: #f8f9fa;
+            border-left-color: var(--sidebar-active-color);
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .dashboard-sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .dashboard-sidebar.show {
+                transform: translateX(0);
+            }
+            
+            .dashboard-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0,0,0,0.5);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .sidebar-overlay.show {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar Overlay (Mobil için) -->
+        <div class="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <img src="../images/avatar.jpg" class="profile-img rounded-circle" alt="Profil Fotoğrafı">
+                <h5 class="mb-1">Ahmet Yılmaz</h5>
+                <p class="text-muted small mb-0">ahmet@example.com</p>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Genel Bakış
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses.html">
+                            <i class="fas fa-book-open"></i>
+                            Kurslarım
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="certificates.html">
+                            <i class="fas fa-certificate"></i>
+                            Sertifikalarım
+                            <span class="badge bg-primary">2</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="calendar.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            Takvim
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="messages.html">
+                            <i class="fas fa-envelope"></i>
+                            Mesajlar
+                            <span class="badge bg-danger">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            Ayarlar
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-danger" href="logout.html">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Çıkış Yap
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- Top Navbar -->
+            <nav class="top-navbar navbar navbar-expand-lg navbar-light bg-white mb-4 sticky-top">
+                <div class="container-fluid">
+                    <button class="btn btn-light d-lg-none" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="d-flex align-items-center">
+                        <h1 class="h4 mb-0">Genel Bakış</h1>
+                    </div>
+                    
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown me-3">
+                            <button class="btn btn-light dropdown-toggle position-relative" type="button" id="notificationsDropdown" data-bs-toggle="dropdown">
+                                <i class="fas fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                                <li><h6 class="dropdown-header">Bildirimler</h6></li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 text-primary me-2">
+                                                <i class="fas fa-video"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted">2 saat önce</small>
+                                                <p class="mb-0">"Matematik 101" kursunda yeni ders eklendi</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 text-success me-2">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted">1 gün önce</small>
+                                                <p class="mb-0">"İngilizce Başlangıç" testi tamamlandı</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 text-warning me-2">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted">2 gün önce</small>
+                                                <p class="mb-0">"Programlama Temelleri" ödevi için son 3 gün</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center" href="#">Tüm Bildirimler</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                                <img src="../images/avatar-sm.jpg" class="rounded-circle me-2" width="32" height="32" alt="Profil">
+                                <span>Ahmet Y.</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><h6 class="dropdown-header">Ahmet Yılmaz</h6></li>
+                                <li>
+                                    <a class="dropdown-item" href="profile.html">
+                                        <i class="fas fa-user me-2"></i>Profilim
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="settings.html">
+                                        <i class="fas fa-cog me-2"></i>Ayarlar
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="logout.html">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+            <!-- İstatistik Kartları -->
+            <div class="row mb-4 g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stats-card h-100 border-left-primary">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Aktif Kurslar</h6>
+                                    <h3 class="mb-0">4</h3>
+                                </div>
+                                <div class="stats-icon bg-primary bg-opacity-10 text-primary">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stats-card h-100 border-left-success">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Tamamlananlar</h6>
+                                    <h3 class="mb-0">2</h3>
+                                </div>
+                                <div class="stats-icon bg-success bg-opacity-10 text-success">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stats-card h-100 border-left-warning">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Devam Eden</h6>
+                                    <h3 class="mb-0">3</h3>
+                                </div>
+                                <div class="stats-icon bg-warning bg-opacity-10 text-warning">
+                                    <i class="fas fa-spinner"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="card stats-card h-100 border-left-danger">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Son Teslim</h6>
+                                    <h3 class="mb-0">2 gün</h3>
+                                </div>
+                                <div class="stats-icon bg-danger bg-opacity-10 text-danger">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Devam Eden Kurslar -->
+            <div class="card mb-4">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Devam Eden Kurslar</h5>
+                    <a href="courses.html" class="btn btn-sm btn-outline-primary">Tümünü Görüntüle</a>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <!-- Kurs 1 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card course-card h-100">
+                                <img src="../images/course-math.jpg" class="card-img-top" alt="Matematik 101 Kursu">
+                                <div class="card-body">
+                                    <h5 class="card-title">Matematik 101</h5>
+                                    <p class="card-text text-muted">
+                                        <i class="fas fa-chalkboard-teacher me-1"></i>Ahmet Yılmaz
+                                    </p>
+                                    
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <small>İlerleme</small>
+                                            <small><strong>65%</strong></small>
+                                        </div>
+                                        <div class="progress progress-thin">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 65%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href="course.html" class="btn btn-sm btn-primary">Devam Et</a>
+                                        <small class="text-muted"><i class="far fa-clock me-1"></i>2 gün önce</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Kurs 2 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card course-card h-100">
+                                <img src="../images/course-english.jpg" class="card-img-top" alt="İngilizce Başlangıç Kursu">
+                                <div class="card-body">
+                                    <h5 class="card-title">İngilizce Başlangıç</h5>
+                                    <p class="card-text text-muted">
+                                        <i class="fas fa-chalkboard-teacher me-1"></i>Ayşe Kaya
+                                    </p>
+                                    
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <small>İlerleme</small>
+                                            <small><strong>42%</strong></small>
+                                        </div>
+                                        <div class="progress progress-thin">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 42%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href="course.html" class="btn btn-sm btn-primary">Devam Et</a>
+                                        <small class="text-muted"><i class="far fa-clock me-1"></i>1 hafta önce</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Kurs 3 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card course-card h-100">
+                                <img src="../images/course-programming.jpg" class="card-img-top" alt="Programlama Temelleri Kursu">
+                                <div class="card-body">
+                                    <h5 class="card-title">Programlama Temelleri</h5>
+                                    <p class="card-text text-muted">
+                                        <i class="fas fa-chalkboard-teacher me-1"></i>Mehmet Demir
+                                    </p>
+                                    
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <small>İlerleme</small>
+                                            <small><strong>78%</strong></small>
+                                        </div>
+                                        <div class="progress progress-thin">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 78%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href="course.html" class="btn btn-sm btn-primary">Devam Et</a>
+                                        <small class="text-muted"><i class="far fa-clock me-1"></i>Bugün</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Son Etkinlikler ve Takvim -->
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="card h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Son Etkinlikler</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush">
+                                <a href="#" class="list-group-item list-group-item-action activity-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="activity-icon bg-primary bg-opacity-10 text-primary">
+                                            <i class="fas fa-video"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">"Matematik 101" kursunda yeni ders eklendi</h6>
+                                            <small class="text-muted">2 saat önce</small>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-muted"></i>
+                                    </div>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action activity-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="activity-icon bg-success bg-opacity-10 text-success">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">"İngilizce Başlangıç" kursunda testi tamamladınız</h6>
+                                            <small class="text-muted">1 gün önce</small>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-muted"></i>
+                                    </div>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action activity-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="activity-icon bg-warning bg-opacity-10 text-warning">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">"Programlama Temelleri" ödevi için son 3 gün</h6>
+                                            <small class="text-muted">2 gün önce</small>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-muted"></i>
+                                    </div>
+                                </a>
+                                
+                                <a href="#" class="list-group-item list-group-item-action activity-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="activity-icon bg-info bg-opacity-10 text-info">
+                                            <i class="fas fa-certificate"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">"Grafik Tasarım" kursu için sertifika kazanıldı</h6>
+                                            <small class="text-muted">1 hafta önce</small>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-muted"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white text-center">
+                            <a href="activities.html" class="btn btn-sm btn-link">Tüm Etkinlikleri Görüntüle</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Takvim</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="mini-calendar" class="mb-3"></div>
+                            <hr>
+                            <h6 class="mb-3">Yaklaşan Etkinlikler</h6>
+                            
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-danger bg-opacity-10 p-2 rounded me-3 text-danger">
+                                        <i class="fas fa-exclamation"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0">Programlama Ödevi</h6>
+                                    <small class="text-muted">Yarın, 18:00</small>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-primary bg-opacity-10 p-2 rounded me-3 text-primary">
+                                        <i class="fas fa-video"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0">Canlı Ders: Matematik</h6>
+                                    <small class="text-muted">2 gün sonra, 20:00</small>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <div class="bg-success bg-opacity-10 p-2 rounded me-3 text-success">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0">İngilizce Test Son Tarihi</h6>
+                                    <small class="text-muted">5 gün sonra, 23:59</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white text-center">
+                            <a href="calendar.html" class="btn btn-sm btn-link">Takvimi Aç</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../js/script.js"></script>
+    
+    <script>
+        // Takvim oluşturma
+        function renderMiniCalendar() {
+            const today = new Date();
+            const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+                              "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+            
+            const calendarEl = document.getElementById('mini-calendar');
+            if (!calendarEl) return;
+            
+            calendarEl.innerHTML = `
+                <div class="text-center mb-3">
+                    <h6 class="mb-0">${monthNames[today.getMonth()]} ${today.getFullYear()}</h6>
+                </div>
+                <div class="d-flex justify-content-between text-center mb-2 small">
+                    <span class="text-muted" style="width:14%">P</span>
+                    <span class="text-muted" style="width:14%">P</span>
+                    <span class="text-muted" style="width:14%">S</span>
+                    <span class="text-muted" style="width:14%">Ç</span>
+                    <span class="text-muted" style="width:14%">P</span>
+                    <span class="text-muted" style="width:14%">C</span>
+                    <span class="text-muted" style="width:14%">C</span>
+                </div>
+                <div class="text-center small">
+                    ${this.generateCalendarDays(today)}
+                </div>
+            `;
+        }
+        
+        // Takvim günlerini oluştur
+        function generateCalendarDays(date) {
+            const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+            const daysInMonth = new Date(date.getFullYear(), date.getMonth()+1, 0).getDate();
+            
+            let daysHtml = '';
+            let dayCounter = 1;
+            
+            // Boş hücreler
+            for (let i = 0; i < firstDay; i++) {
+                daysHtml += '<span style="width:14%; display:inline-block">&nbsp;</span>';
+            }
+            
+            // Günler
+            for (let i = firstDay; i < 42; i++) {
+                if (dayCounter > daysInMonth) {
+                    daysHtml += '<span style="width:14%; display:inline-block">&nbsp;</span>';
+                    continue;
+                }
+                
+                const isToday = dayCounter === date.getDate();
+                const dayClass = isToday ? 'bg-primary text-white rounded-circle' : '';
+                
+                daysHtml += `
+                    <span style="width:14%; display:inline-block" class="${dayClass}">
+                        ${dayCounter++}
+                    </span>
+                    ${i % 7 === 6 ? '<br>' : ''}
+                `;
+            }
+            
+            return daysHtml;
+        }
+        
+        // Sidebar toggle
+        function setupSidebar() {
+            const sidebar = document.querySelector('.dashboard-sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebarOverlay = document.querySelector('.sidebar-overlay');
+            
+            if (!sidebar || !sidebarToggle) return;
+            
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('show');
+                sidebarOverlay.classList.toggle('show');
+                document.body.style.overflow = sidebar.classList.contains('show') ? 'hidden' : '';
+            });
+            
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('show');
+                sidebarOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            });
+        }
+        
+        // Sayfa yüklendiğinde çalışacaklar
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMiniCalendar();
+            setupSidebar();
+            
+            // Kullanıcıyı selamlama
+            const hour = new Date().getHours();
+            const greeting = hour < 12 ? 'Günaydın' : hour < 18 ? 'İyi günler' : 'İyi akşamlar';
+            
+            const greetingEl = document.createElement('div');
+            greetingEl.className = 'alert alert-info alert-dismissible fade show mt-3';
+            greetingEl.innerHTML = `
+                <strong>${greeting}, Ahmet!</strong> Bugün öğrenmeye devam edelim.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.querySelector('.dashboard-content').prepend(greetingEl);
+        });
+    </script>
+</body>
+</html>
