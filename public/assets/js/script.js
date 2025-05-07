@@ -355,3 +355,10 @@ function changeLanguage(lang) {
       });
     });
 }
+
+// Öne Çıkan Kurslar için Canlı Veri
+const updateCourseStats = () => {
+  document.getElementById('total-courses').textContent = '120+';
+  document.getElementById('active-students').textContent = '5,000+';
+  document.getElementById('success-rate').textContent = '98%';
+};
